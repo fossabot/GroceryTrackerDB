@@ -46,8 +46,8 @@ function AnimatedAppLoader({children, image}) {
   const onFinish = React.useMemo(() => setSplashReady(true), []);
 
   if (!isSplashReady) {
-    // @ts-ignore
     return (
+        // @ts-ignore
         <AppLoading
             startAsync={startAsync}
             onError={console.error}
@@ -75,7 +75,7 @@ function AnimatedSplashScreen({children, image}) {
     if (isAppReady) {
       Animated.timing(animation, {
         toValue: 0,
-        duration: 200,
+        duration: 2000,
         useNativeDriver: true,
       }).start(() => setAnimationComplete(true));
     }
