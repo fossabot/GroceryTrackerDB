@@ -1,23 +1,26 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import {StyleSheet} from 'react-native';
+import Scanner from "../components/scanner";
+import {Text, View} from '../components/Themed';
 
 export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Scan</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/TabOneScreen.tsx" />
-    </View>
+      <View style={styles.container}>
+        <Text
+            lightColor="rgba(0,0,0,0.8)"
+            darkColor="rgba(255,255,255,0.8)">
+          This page for scanning barcodes:
+        </Text>
+        <Scanner/>
+      </View>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
   title: {
@@ -27,6 +30,6 @@ const styles = StyleSheet.create({
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: '30%',
   },
 });

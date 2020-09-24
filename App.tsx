@@ -64,7 +64,7 @@ function AnimatedAppLoader({children, image}) {
 }
 
 // @ts-ignore
-function AnimatedSplashScreen({children, image}) {
+function AnimatedSplashScreen(this: any, {children, image}) {
   const animation = React.useMemo(() => new Animated.Value(1), []);
   const [isAppReady, setAppReady] = React.useState(false);
   const [isSplashAnimationComplete, setAnimationComplete] = React.useState(
@@ -73,11 +73,12 @@ function AnimatedSplashScreen({children, image}) {
 
   React.useEffect(() => {
     if (isAppReady) {
-      Animated.timing(animation, {
-        toValue: 0,
-        duration: 2000,
-        useNativeDriver: true,
-      }).start(() => setAnimationComplete(true));
+      Animated.delay(2000),
+          Animated.timing(animation, {
+            toValue: 0,
+            duration: 1000,
+            useNativeDriver: true,
+          }).start(() => setAnimationComplete(true));
     }
   }, [isAppReady]);
 
