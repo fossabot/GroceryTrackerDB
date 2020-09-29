@@ -39,7 +39,8 @@ function AnimatedAppLoader({children, image}) {
 
   const startAsync = React.useMemo(
       // If you use a local image with require(...), use `Asset.fromModule`
-      () => () => Asset.fromURI(image).downloadAsync(),
+      // () => () => Asset.fromURI(image).downloadAsync(),
+      () => () => Asset.fromModule(image),
       [image]
   );
 

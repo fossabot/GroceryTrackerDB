@@ -1,11 +1,11 @@
 export default {
     icon:
-        "https://github.com/ADMARIl/aingson.xyz/blob/master/static/mgt.logo.png?raw=true",
+        "assets/images/white_mgt.logo.png",
     splash: {
         image:
-            "https://github.com/ADMARIl/aingson.xyz/blob/master/static/mgt.logo.png?raw=true",
+            "assets/images/white_mgt.logo.png",
         resizeMode: "contain",
-        backgroundColor: "#98ff98",
+        backgroundColor: "#06905f",
     },
     "android": {
         "package": "mgt.app"

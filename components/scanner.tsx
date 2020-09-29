@@ -9,10 +9,12 @@ export default function Scanner() {
     useEffect(() => {
         (async () => {
             const {status} = await BarCodeScanner.requestPermissionsAsync();
+            // @ts-ignore
             setHasPermission(status === 'granted');
         })();
     }, []);
 
+    // @ts-ignore
     const handleBarCodeScanned = ({type, data}) => {
         setScanned(true);
         alert(`Bar code with type ${type} and data ${data} has been scanned!`);
@@ -25,6 +27,7 @@ export default function Scanner() {
         return <Text>No access to camera</Text>;
     }
 
+    // @ts-ignore
     return (
         <View
             style={{
