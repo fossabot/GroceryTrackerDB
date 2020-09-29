@@ -2,7 +2,7 @@
   <img alt="Logo" src="assets/images/mgt.logo.png" width="100" />
 </div>
 <h1 align="center">
-   Grocer Tracker App
+   Grocery Tracker App
 </h1>
  
 Cross platform application that will keep track of the groceries that are bought on a per home basis.
