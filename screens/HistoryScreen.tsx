@@ -3,12 +3,13 @@ import {StyleSheet} from 'react-native';
 
 import {Text, View} from '../components/Themed';
 
-export default function TabOneScreen() {
+export default function HistoryScreen() {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Groceries List</Text>
+            <Text style={styles.title}>History</Text>
             <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
-            <Text style={styles.body}>This page will have a list of the current inventory of groceries</Text>
+            <Text style={styles.body}>This page will have a list of the history of groceries removed from
+                inventory</Text>
         </View>
     );
 }
