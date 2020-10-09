@@ -3,12 +3,12 @@ import {StyleSheet} from 'react-native';
 
 import {Text, View} from '../components/Themed';
 
-export default function TabOneScreen() {
+export default function ShoppingScreen() {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Groceries List</Text>
+            <Text style={styles.title}>Shopping List</Text>
             <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
-            <Text style={styles.body}>This page will have a list of the current inventory of groceries</Text>
+            <Text style={styles.body}>This page will have the user's shopping list</Text>
         </View>
     );
 }

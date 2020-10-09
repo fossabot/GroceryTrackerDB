@@ -6,41 +6,64 @@ import * as React from 'react';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import GroceriesScreen from '../screens/GroceriesScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import {BottomTabParamList, GroceriesParamList, TabOneParamList, TabTwoParamList} from '../types';
+import ScanScreen from '../screens/ScanScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+import HistoryScreen from "../screens/HistoryScreen";
+import ShoppingScreen from "../screens/ShoppingScreen";
+import {
+    BottomTabParamList,
+    GroceriesParamList,
+    HistoryParamList,
+    ScanParamList,
+    SettingsParamList,
+    ShoppingParamList
+} from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+    const colorScheme = useColorScheme();
 
-  return (
-    <BottomTab.Navigator
-      initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
-      <BottomTab.Screen
-        name="Groceries"
-        component={GroceriesNavigator}
-        options={{
-          tabBarIcon: ({ color }) => <Ionicons name="ios-list" size={24} color={color} />,
-        }}
-      />
-    <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
-        options={{
-            tabBarIcon: ({ color }) => <Ionicons name="ios-barcode" size={24} color={color} />,
-        }}
-    />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
-        options={{
-            tabBarIcon: ({color}) => <TabBarIcon name="ios-settings" color={color}/>,
-        }}
-      />
-    </BottomTab.Navigator>
+    return (
+        <BottomTab.Navigator
+            initialRouteName="Scan"
+            tabBarOptions={{activeTintColor: Colors[colorScheme].tint}}>
+            <BottomTab.Screen
+                name="Inventory"
+                component={GroceriesNavigator}
+                options={{
+                    tabBarIcon: ({color}) => <Ionicons name="ios-list" size={24} color={color}/>,
+                }}
+            />
+            <BottomTab.Screen
+                name="Shopping"
+                component={ShoppingNavigator}
+                options={{
+                    tabBarIcon: ({color}) => <Ionicons name="ios-cart" size={24} color={color}/>,
+                }}
+            />
+            <BottomTab.Screen
+                name="Scan"
+                component={ScanNavigator}
+                options={{
+                    tabBarIcon: ({color}) => <Ionicons name="ios-barcode" size={24} color={color}/>,
+                }}
+            />
+            <BottomTab.Screen
+                name="History"
+                component={HistoryNavigator}
+                options={{
+                    tabBarIcon: ({color}) => <Ionicons name="ios-clock" size={24} color={color}/>,
+                }}
+            />
+            <BottomTab.Screen
+                name="Settings"
+                component={SettingsNavigator}
+                options={{
+                    tabBarIcon: ({color}) => <TabBarIcon name="ios-settings" color={color}/>,
+                }}
+            />
+        </BottomTab.Navigator>
   );
 }
 
@@ -56,40 +79,68 @@ const GroceriesStack = createStackNavigator<GroceriesParamList>();
 
 function GroceriesNavigator() {
   return (
-    <GroceriesStack.Navigator>
-      <GroceriesStack.Screen
-        name="GroceriesScreen"
-        component={GroceriesScreen}
-        options={{ headerTitle: 'Groceries List' }}
-      />
-    </GroceriesStack.Navigator>
+      <GroceriesStack.Navigator>
+          <GroceriesStack.Screen
+              name="GroceriesScreen"
+              component={GroceriesScreen}
+              options={{headerTitle: 'Groceries List'}}
+          />
+      </GroceriesStack.Navigator>
   );
 }
 
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const ShoppingStack = createStackNavigator<ShoppingParamList>();
 
-function TabOneNavigator() {
+function ShoppingNavigator() {
     return (
-        <TabOneStack.Navigator>
-            <TabOneStack.Screen
-                name="TabOneScreen"
-                component={TabOneScreen}
-                options={{ headerTitle: 'Scan' }}
+        <ShoppingStack.Navigator>
+            <ShoppingStack.Screen
+                name="ShoppingScreen"
+                component={ShoppingScreen}
+                options={{headerTitle: 'Shopping List'}}
             />
-        </TabOneStack.Navigator>
+        </ShoppingStack.Navigator>
     );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const ScanStack = createStackNavigator<ScanParamList>();
 
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
-      />
-    </TabTwoStack.Navigator>
-  );
+function ScanNavigator() {
+    return (
+        <ScanStack.Navigator>
+            <ScanStack.Screen
+                name="ScanScreen"
+                component={ScanScreen}
+                options={{headerTitle: 'Scan'}}
+            />
+        </ScanStack.Navigator>
+    );
+}
+
+const HistoryStack = createStackNavigator<HistoryParamList>();
+
+function HistoryNavigator() {
+    return (
+        <HistoryStack.Navigator>
+            <HistoryStack.Screen
+                name="HistoryScreen"
+                component={HistoryScreen}
+                options={{headerTitle: 'History'}}
+            />
+        </HistoryStack.Navigator>
+    );
+}
+
+const SettingsStack = createStackNavigator<SettingsParamList>();
+
+function SettingsNavigator() {
+    return (
+        <SettingsStack.Navigator>
+            <SettingsStack.Screen
+                name="SettingsScreen"
+                component={SettingsScreen}
+                options={{headerTitle: 'Tab Two Title'}}
+            />
+        </SettingsStack.Navigator>
+    );
 }
