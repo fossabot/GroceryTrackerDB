@@ -13,7 +13,9 @@ export default function SettingsScreen() {
         </View>
         <View style={styles.body_container}>
           <Text style={styles.body}>This page will have app settings</Text>
-          <ToggleSwitch/>
+          <View style={styles.switch_container}>
+            <ToggleSwitch/>
+          </View>
           <Text style={styles.body}> Default Scanner to Camera On</Text>
         </View>
       </View>
@@ -25,6 +27,10 @@ const styles = StyleSheet.create({
   main_container: {
     flex: 1,
   },
+  switch_container: {
+    flexWrap: 'wrap',
+    width: 100,
+  },
   heading_container: {
     flex: 1,
     height: 100,
@@ -32,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   body_container: {
-    flex: 1,
+    flex: 5,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },

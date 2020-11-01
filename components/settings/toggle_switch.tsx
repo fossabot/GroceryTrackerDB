@@ -19,5 +19,7 @@ export default function ToggleSwitch() {
 }
 
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+        flex: 0,
+    },
 });
