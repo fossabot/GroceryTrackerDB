@@ -139,7 +139,7 @@ function SettingsNavigator() {
             <SettingsStack.Screen
                 name="SettingsScreen"
                 component={SettingsScreen}
-                options={{headerTitle: 'Tab Two Title'}}
+                options={{headerTitle: 'Settings'}}
             />
         </SettingsStack.Navigator>
     );

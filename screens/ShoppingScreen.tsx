@@ -1,27 +1,60 @@
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet, VirtualizedList} from 'react-native';
 
+import StyledListItem from '../components/StyledListItem';
 import {Text, View} from '../components/Themed';
+
+// @ts-ignore
+const DATA = [];
+
+// @ts-ignore
+const getItem = (data, index) => {
+    return {
+        id: Math.random().toString(12).substring(0),
+        title: `Item ${index + 1}`
+    }
+}
+
+// @ts-ignore
+const getItemCount = (data) => {
+    return 50;
+}
+
+// @ts-ignore
+const Item = ({title}) => {
+    return (
+        <View>
+            <Text style={styles.title}>{title}</Text>
+        </View>
+    );
+}
 
 export default function ShoppingScreen() {
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Shopping List</Text>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
-            <Text style={styles.body}>This page will have the user's shopping list</Text>
-        </View>
+        <SafeAreaView style={styles.container}>
+            <Text style={styles.title}>Name, Quantity</Text>
+            <VirtualizedList
+                data={DATA}
+                initialNumToRender={4}
+                renderItem={({item}) => <StyledListItem name={item.title} qty={2} id={'h24'}/>}
+                keyExtractor={item => item.id}
+                getItemCount={getItemCount}
+                getItem={getItem}
+            />
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
+        flexDirection: 'column',
         justifyContent: 'center',
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
+        marginVertical: 8,
+        marginLeft: 7,
     },
     body: {
         fontSize: 14,

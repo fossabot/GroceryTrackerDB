@@ -6,6 +6,7 @@ export default function Scanner() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
 
+
     useEffect(() => {
         (async () => {
             const {status} = await BarCodeScanner.requestPermissionsAsync();
@@ -37,6 +38,9 @@ export default function Scanner() {
             <BarCodeScanner
                 onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                 style={StyleSheet.absoluteFillObject}
+                barCodeTypes={[BarCodeScanner.Constants.BarCodeType.ean13, BarCodeScanner.Constants.BarCodeType.ean8,
+                    BarCodeScanner.Constants.BarCodeType.upc_a, BarCodeScanner.Constants.BarCodeType.upc_e,
+                    BarCodeScanner.Constants.BarCodeType.upc_ean]}
             />
 
             {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)}/>}
