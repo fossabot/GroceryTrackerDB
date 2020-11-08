@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {StyleSheet, TextInput, SafeAreaView, FlatList, VirtualizedList} from 'react-native';
+import {SafeAreaView, StyleSheet, VirtualizedList} from 'react-native';
 
 import StyledListItem from '../components/StyledListItem';
 import {Text, View} from '../components/Themed';
@@ -55,11 +55,12 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         justifyContent: 'center',
-        
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
+        marginVertical: 8,
+        marginLeft: 7,
     },
     body: {
         fontSize: 14,
