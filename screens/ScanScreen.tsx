@@ -6,17 +6,15 @@ import {Text, View} from '../components/Themed';
 
 export default class ScanScreen extends Component {
   state = {
-    mode: '',
+    mode: 'add',
     name: '',
     UPC: '',
     qty: '',
     notes: '',
     message: "",
+    addbgColor: '#0ed145',
+    removebgColor: '#BEA6A1',
   };
-
-  callbackFunction = (childData) => {
-    this.setState({message: childData})
-  }
 
   onSubmit() {
     const {mode, name, UPC, qty, notes} = this.state;
@@ -29,31 +27,56 @@ export default class ScanScreen extends Component {
 
   onAddToggle() {
     this.state.mode = 'add';
+    this.setState({addbgColor: '#0ed145', removebgColor: '#BEA6A1',});
   }
 
   onRemoveToggle() {
     this.state.mode = 'remove';
+    this.setState({addbgColor: '#A1AFA0', removebgColor: '#ec1c24',});
+  }
+
+  changeColor() {
+    if (this.state.mode === 'add') {
+      this.setState({backgroundColor: 'red', backgroundColor2: 'black'});
+    } else {
+      this.setState({pressed: false, backgroundColor: 'black', backgroundColor2: 'red'});
+    }
   }
 
   render() {
     return (
         <View style={styles.container}>
-          <Text
-              lightColor="rgba(0,0,0,0.8)"
-              darkColor="rgba(255,255,255,0.8)">
-            This page for scanning barcodes:
-          </Text>
 
           <View style={styles.switchContainer}>
             <TouchableOpacity
-                style={styles.addButton}
-                onPress={this.onAddToggle.bind(this)}
+                style={{
+                  backgroundColor: this.state.addbgColor,
+                  alignItems: 'center',
+                  flex: 1,
+                  height: 44,
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: 'white',
+                  borderRadius: 0,
+                  marginBottom: 10,
+                }}
+                onPress={() => this.onAddToggle()}
             >
               <Text style={styles.buttonText}> ADD </Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={styles.removeButton}
-                onPress={this.onRemoveToggle.bind(this)}
+                style={{
+                  backgroundColor: this.state.removebgColor,
+                  alignItems: 'center',
+                  flex: 1,
+                  height: 44,
+                  padding: 10,
+                  borderWidth: 1,
+                  borderColor: 'white',
+                  borderRadius: 0,
+                  marginBottom: 10,
+                }}
+                onPress={() => this.onRemoveToggle()}
             >
               <Text style={styles.buttonText}> REMOVE </Text>
             </TouchableOpacity>
@@ -119,6 +142,8 @@ const styles = StyleSheet.create({
   switchContainer: {
     flexDirection: 'row',
     borderRadius: 5,
+    paddingTop: 5,
+    paddingHorizontal: 3,
   },
   rowContainer: {
     flexDirection: 'row',
@@ -147,28 +172,6 @@ const styles = StyleSheet.create({
     marginBottom: 7,
     marginTop: 5,
   },
-  addButton: {
-    alignItems: 'center',
-    backgroundColor: '#0ed145',
-    flex: 1,
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 0,
-    marginBottom: 10,
-  },
-  removeButton: {
-    alignItems: 'center',
-    backgroundColor: '#ec1c24',
-    flex: 1,
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 0,
-    marginBottom: 10,
-  },
   buttonText: {
     fontSize: 20,
     alignItems: 'center',
@@ -183,6 +186,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     borderColor: 'grey',
     marginVertical: 1,
+    marginBottom: 5,
   },
   UpcInput: {
     flex: 3,
