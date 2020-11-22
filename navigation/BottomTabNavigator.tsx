@@ -83,7 +83,7 @@ function GroceriesNavigator() {
           <GroceriesStack.Screen
               name="GroceriesScreen"
               component={GroceriesScreen}
-              options={{headerTitle: 'Groceries List'}}
+              options={{headerTitle: 'Current Inventory'}}
           />
       </GroceriesStack.Navigator>
   );

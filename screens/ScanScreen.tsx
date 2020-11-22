@@ -7,6 +7,7 @@ import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabase("db.db");
 
+// these sql functions don't seem to be working
 function addToInventory({name, qty, UPC, notes}: { name: string, qty: string, UPC: string, notes: string }) {
     db.transaction(tx => {
         tx.executeSql(
