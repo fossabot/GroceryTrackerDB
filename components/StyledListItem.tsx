@@ -4,7 +4,7 @@ import {MaterialIcons} from '@expo/vector-icons';
 
 import {Text, View} from './Themed';
 
-export default function StyledListItem({name, qty, id}: { name: string, qty: number, id: string }) {
+export default function StyledListItem({name, qty, id}: { name: string, qty: string | number, id: string }) {
     return (
         <View style={styles.container_main}>
             <View style={styles.container}>

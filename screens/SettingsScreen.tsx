@@ -1,24 +1,33 @@
 import * as React from 'react';
-import {StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
+import {Divider,} from 'react-native-paper';
+import SettingsItem from '../components/SettingsItem';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {Text, View} from '../components/Themed';
-import ToggleSwitch from "../components/settings/toggle_switch";
 
 export default function SettingsScreen() {
+
+  let GTDB_Demo: { app_mode: boolean; };
+
+  let demo_mode = false;
+
   return (
-      <View style={styles.main_container}>
-        <View style={styles.heading_container}>
-          <Text style={styles.title}>Settings</Text>
-          <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
-        </View>
-        <View style={styles.body_container}>
-          <Text style={styles.body}>This page will have app settings</Text>
-          <View style={styles.switch_container}>
-            <ToggleSwitch/>
-          </View>
-          <Text style={styles.body}> Default Scanner to Camera On</Text>
-        </View>
-      </View>
+      <ScrollView
+          style={styles.main_container}
+      >
+        <Divider/>
+        <SettingsItem
+            label="Demo Mode"
+            value={demo_mode}
+            onValueChange={() => {
+              AsyncStorage.setItem(
+                  'demo_key',
+                  demo_mode ? 'true' : 'false'
+              );
+            }}
+        />
+        <Divider/>
+      </ScrollView>
 
   );
 }

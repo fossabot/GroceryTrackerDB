@@ -1,28 +1,58 @@
-import * as React from 'react';
-import {Component} from 'react';
+import React, {Component} from 'react';
 import {Alert, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import Scanner from "../components/scanner";
 import {Text, View} from '../components/Themed';
 
+import * as SQLite from 'expo-sqlite';
+
+const db = SQLite.openDatabase("db.db");
+
+function addToInventory({name, qty, UPC, notes}: { name: string, qty: string, UPC: string, notes: string }) {
+    db.transaction(tx => {
+        tx.executeSql(
+            "create table if not exists inventory (id integer primary key not null, name text not null, qty integer not null, upc int, notes text, date DATETIME);"
+        );
+    });
+
+    db.transaction(
+        tx => {
+            tx.executeSql("insert into inventory (name, qty, upc, notes, date) values (?, ?, ?, ?, datetime('now'))", [name, qty, UPC, notes]);
+            tx.executeSql("select * from items", [], (_, {rows}) =>
+                console.log(JSON.stringify(rows))
+            );
+        },
+    );
+}
+
+function removeFromInventory() {
+
+}
+
 export default class ScanScreen extends Component {
-  state = {
-    mode: 'add',
-    name: '',
-    UPC: '',
-    qty: '',
-    notes: '',
-    message: "",
+
+    state = {
+        mode: 'add',
+        name: '',
+        UPC: '',
+        qty: '',
+        notes: '',
+        message: "",
     addbgColor: '#0ed145',
     removebgColor: '#BEA6A1',
   };
 
   onSubmit() {
-    const {mode, name, UPC, qty, notes} = this.state;
-    if (mode === 'remove') {
-      Alert.alert('Removing', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes}`);
-    } else {
-      Alert.alert('Adding', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes}`);
-    }
+      const {mode, name, UPC, qty, notes} = this.state;
+      if (name === '' || qty === '') {
+          Alert.alert("Error", 'Make sure you have something in all the required fields!');
+          return false;
+      }
+      if (mode === 'remove') {
+          Alert.alert('Removing', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes}`);
+      } else {
+          Alert.alert('Adding', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes} `);
+          addToInventory({name, qty, UPC, notes});
+      }
   }
 
   onAddToggle() {
@@ -35,15 +65,8 @@ export default class ScanScreen extends Component {
     this.setState({addbgColor: '#A1AFA0', removebgColor: '#ec1c24',});
   }
 
-  changeColor() {
-    if (this.state.mode === 'add') {
-      this.setState({backgroundColor: 'red', backgroundColor2: 'black'});
-    } else {
-      this.setState({pressed: false, backgroundColor: 'black', backgroundColor2: 'red'});
-    }
-  }
-
   render() {
+
     return (
         <View style={styles.container}>
 
@@ -62,7 +85,7 @@ export default class ScanScreen extends Component {
                 }}
                 onPress={() => this.onAddToggle()}
             >
-              <Text style={styles.buttonText}> ADD </Text>
+                <Text style={styles.buttonText}> Add </Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={{
@@ -78,7 +101,7 @@ export default class ScanScreen extends Component {
                 }}
                 onPress={() => this.onRemoveToggle()}
             >
-              <Text style={styles.buttonText}> REMOVE </Text>
+                <Text style={styles.buttonText}> Remove </Text>
             </TouchableOpacity>
           </View>
 
