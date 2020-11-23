@@ -4,8 +4,21 @@ import Scanner from "../components/scanner";
 import {Text, View} from '../components/Themed';
 
 import * as SQLite from 'expo-sqlite';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const db = SQLite.openDatabase("db.db");
+
+const getData = async () => {
+    try {
+        const value = await AsyncStorage.getItem('@storage_Key')
+        if (value !== null) {
+            // value previously stored
+            return value;
+        }
+    } catch (e) {
+        // error reading value
+    }
+}
 
 // these sql functions don't seem to be working
 function addToInventory({name, qty, UPC, notes}: { name: string, qty: string, UPC: string, notes: string }) {
@@ -38,20 +51,22 @@ export default class ScanScreen extends Component {
         qty: '',
         notes: '',
         message: "",
-    addbgColor: '#0ed145',
-    removebgColor: '#BEA6A1',
-  };
+        addbgColor: '#0ed145',
+        removebgColor: '#BEA6A1',
+    };
 
-  onSubmit() {
-      const {mode, name, UPC, qty, notes} = this.state;
-      if (name === '' || qty === '') {
-          Alert.alert("Error", 'Make sure you have something in all the required fields!');
-          return false;
-      }
-      if (mode === 'remove') {
-          Alert.alert('Removing', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes}`);
-      } else {
-          Alert.alert('Adding', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes} `);
+    async onSubmit() {
+        this.state.UPC = await getData();
+        const {mode, name, UPC, qty, notes} = this.state;
+
+        if (name === '' || qty === '') {
+            Alert.alert("Error", 'Make sure you have something in all the required fields!');
+            return false;
+        }
+        if (mode === 'remove') {
+            Alert.alert('Removing', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes}`);
+        } else {
+            Alert.alert('Adding', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes} `);
           addToInventory({name, qty, UPC, notes});
       }
   }

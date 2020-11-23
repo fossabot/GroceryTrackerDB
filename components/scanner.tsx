@@ -2,6 +2,16 @@ import React, {useEffect, useState} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {BarCodeScanner} from 'expo-barcode-scanner';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const storeData = async (value: string) => {
+    try {
+        await AsyncStorage.setItem('@storage_Key', value)
+    } catch (e) {
+        // saving error
+    }
+}
+
 export default function Scanner() {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
@@ -19,6 +29,7 @@ export default function Scanner() {
     const handleBarCodeScanned = ({type, data}) => {
         setScanned(true);
         alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+        storeData(data);
     };
 
     if (hasPermission === null) {
