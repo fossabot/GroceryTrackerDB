@@ -78,4 +78,13 @@ You can build a standalone android `.apk` file by running this command
 
 - In App
 
-![app](assets/images/in_app.PNG)
+![empty scan page](docs/media/scan_empty.jpg)
+![full_scan_page](docs/media/scan_populated.PNG)
+![inventory](docs/media/inventory.PNG)
+![history](docs/media/history.PNG)
+![item info](docs/media/item_info.PNG)
+![shopping list](docs/media/shopping.PNG)
+![settings](docs/media/settings.PNG)
+
+- Demo
+![demo](docs/media/demo.mp4)

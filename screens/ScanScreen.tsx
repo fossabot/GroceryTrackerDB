@@ -1,61 +1,121 @@
-import * as React from 'react';
-import {Component} from 'react';
+import React, {Component} from 'react';
 import {Alert, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import Scanner from "../components/scanner";
 import {Text, View} from '../components/Themed';
 
-export default class ScanScreen extends Component {
-  state = {
-    mode: '',
-    name: '',
-    UPC: '',
-    qty: '',
-    notes: '',
-    message: "",
-  };
+import * as SQLite from 'expo-sqlite';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-  callbackFunction = (childData) => {
-    this.setState({message: childData})
-  }
+const db = SQLite.openDatabase("db.db");
 
-  onSubmit() {
-    const {mode, name, UPC, qty, notes} = this.state;
-    if (mode === 'remove') {
-      Alert.alert('Removing', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes}`);
-    } else {
-      Alert.alert('Adding', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes}`);
+const getData = async () => {
+    try {
+        const value = await AsyncStorage.getItem('@storage_Key')
+        if (value !== null) {
+            // value previously stored
+            return value;
+        }
+    } catch (e) {
+        // error reading value
     }
+}
+
+// these sql functions don't seem to be working
+function addToInventory({name, qty, UPC, notes}: { name: string, qty: string, UPC: string, notes: string }) {
+    db.transaction(tx => {
+        tx.executeSql(
+            "create table if not exists inventory (id integer primary key not null, name text not null, qty integer not null, upc int, notes text, date DATETIME);"
+        );
+    });
+
+    db.transaction(
+        tx => {
+            tx.executeSql("insert into inventory (name, qty, upc, notes, date) values (?, ?, ?, ?, datetime('now'))", [name, qty, UPC, notes]);
+            tx.executeSql("select * from items", [], (_, {rows}) =>
+                console.log(JSON.stringify(rows))
+            );
+        },
+    );
+}
+
+function removeFromInventory() {
+
+}
+
+export default class ScanScreen extends Component {
+
+    state = {
+        mode: 'add',
+        name: '',
+        UPC: '',
+        qty: '',
+        notes: '',
+        message: "",
+        addbgColor: '#0ed145',
+        removebgColor: '#BEA6A1',
+    };
+
+    async onSubmit() {
+        this.state.UPC = await getData();
+        const {mode, name, UPC, qty, notes} = this.state;
+
+        if (name === '' || qty === '') {
+            Alert.alert("Error", 'Make sure you have something in all the required fields!');
+            return false;
+        }
+        if (mode === 'remove') {
+            Alert.alert('Removing', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes}`);
+        } else {
+            Alert.alert('Adding', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes} `);
+          addToInventory({name, qty, UPC, notes});
+      }
   }
 
   onAddToggle() {
     this.state.mode = 'add';
+    this.setState({addbgColor: '#0ed145', removebgColor: '#BEA6A1',});
   }
 
   onRemoveToggle() {
     this.state.mode = 'remove';
+    this.setState({addbgColor: '#A1AFA0', removebgColor: '#ec1c24',});
   }
 
   render() {
+
     return (
         <View style={styles.container}>
-          <Text
-              lightColor="rgba(0,0,0,0.8)"
-              darkColor="rgba(255,255,255,0.8)">
-            This page for scanning barcodes:
-          </Text>
 
           <View style={styles.switchContainer}>
             <TouchableOpacity
-                style={styles.addButton}
-                onPress={this.onAddToggle.bind(this)}
+                style={{
+                    backgroundColor: this.state.addbgColor,
+                    alignItems: 'center',
+                    flex: 1,
+                    height: 44,
+                    padding: 10,
+                    borderWidth: 0,
+                    borderRadius: 0,
+                    marginBottom: 10,
+                }}
+                onPress={() => this.onAddToggle()}
             >
-              <Text style={styles.buttonText}> ADD </Text>
+                <Text style={styles.buttonText}> Add </Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={styles.removeButton}
-                onPress={this.onRemoveToggle.bind(this)}
+                style={{
+                    backgroundColor: this.state.removebgColor,
+                    alignItems: 'center',
+                    flex: 1,
+                    height: 44,
+                    padding: 10,
+                    borderWidth: 0,
+                    borderRadius: 0,
+                    marginBottom: 10,
+                }}
+                onPress={() => this.onRemoveToggle()}
             >
-              <Text style={styles.buttonText}> REMOVE </Text>
+                <Text style={styles.buttonText}> Remove </Text>
             </TouchableOpacity>
           </View>
 
@@ -112,18 +172,22 @@ export default class ScanScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'stretch',
-    justifyContent: 'center',
+      flex: 1,
+      alignItems: 'stretch',
+      justifyContent: 'center',
+      backgroundColor: '#f2f2f7',
   },
   switchContainer: {
-    flexDirection: 'row',
-    borderRadius: 5,
+      flexDirection: 'row',
+      paddingTop: 5,
+      marginHorizontal: 3,
+      backgroundColor: '#f2f2f7',
   },
   rowContainer: {
-    flexDirection: 'row',
-    marginLeft: 7,
-    marginRight: 7,
+      flexDirection: 'row',
+      marginLeft: 7,
+      marginRight: 7,
+      backgroundColor: '#f2f2f7',
   },
   title: {
     fontSize: 20,
@@ -135,39 +199,16 @@ const styles = StyleSheet.create({
     width: '30%',
   },
   button: {
-    alignItems: 'center',
-    backgroundColor: '#00a8f3',
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 10,
-    marginLeft: 7,
-    marginRight: 7,
-    marginBottom: 7,
-    marginTop: 5,
-  },
-  addButton: {
-    alignItems: 'center',
-    backgroundColor: '#0ed145',
-    flex: 1,
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 0,
-    marginBottom: 10,
-  },
-  removeButton: {
-    alignItems: 'center',
-    backgroundColor: '#ec1c24',
-    flex: 1,
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 0,
-    marginBottom: 10,
+      alignItems: 'center',
+      backgroundColor: '#00a8f3',
+      height: 44,
+      padding: 10,
+      borderWidth: 0,
+      borderRadius: 10,
+      marginHorizontal: 7,
+
+      marginBottom: 7,
+      marginTop: 5,
   },
   buttonText: {
     fontSize: 20,
@@ -175,34 +216,38 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   fullWidthInput: {
-    flex: 1,
-    fontSize: 20,
-    height: 44,
-    padding: 1,
-    borderWidth: 1,
-    borderRadius: 7,
-    borderColor: 'grey',
-    marginVertical: 1,
+      flex: 1,
+      fontSize: 16,
+      height: 44,
+      padding: 1,
+      borderWidth: 0,
+      borderRadius: 7,
+      backgroundColor: '#e3e3e8',
+      marginVertical: 1,
+      marginBottom: 5,
+      paddingHorizontal: 8,
   },
   UpcInput: {
-    flex: 3,
-    fontSize: 20,
-    height: 44,
-    padding: 1,
-    borderWidth: 1,
-    borderRadius: 7,
-    borderColor: 'grey',
-    marginVertical: 1,
-    marginRight: 3,
+      flex: 3,
+      fontSize: 16,
+      height: 44,
+      padding: 1,
+      borderWidth: 0,
+      borderRadius: 7,
+      backgroundColor: '#e3e3e8',
+      marginRight: 3,
+      marginBottom: 5,
+      paddingHorizontal: 8,
   },
   qtyInput: {
-    flex: 1,
-    fontSize: 20,
-    height: 44,
-    padding: 1,
-    borderWidth: 1,
-    borderRadius: 7,
-    borderColor: 'grey',
-    marginVertical: 1,
+      flex: 1,
+      fontSize: 16,
+      height: 44,
+      padding: 1,
+      borderWidth: 0,
+      borderRadius: 7,
+      backgroundColor: '#e3e3e8',
+      marginBottom: 5,
+      paddingHorizontal: 8,
   },
 });

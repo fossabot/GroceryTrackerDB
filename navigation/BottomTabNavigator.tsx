@@ -36,10 +36,10 @@ export default function BottomTabNavigator() {
                 }}
             />
             <BottomTab.Screen
-                name="Shopping"
-                component={ShoppingNavigator}
+                name="History"
+                component={HistoryNavigator}
                 options={{
-                    tabBarIcon: ({color}) => <Ionicons name="ios-cart" size={24} color={color}/>,
+                    tabBarIcon: ({color}) => <Ionicons name="ios-clock" size={24} color={color}/>,
                 }}
             />
             <BottomTab.Screen
@@ -50,10 +50,10 @@ export default function BottomTabNavigator() {
                 }}
             />
             <BottomTab.Screen
-                name="History"
-                component={HistoryNavigator}
+                name="Shopping"
+                component={ShoppingNavigator}
                 options={{
-                    tabBarIcon: ({color}) => <Ionicons name="ios-clock" size={24} color={color}/>,
+                    tabBarIcon: ({color}) => <Ionicons name="ios-cart" size={24} color={color}/>,
                 }}
             />
             <BottomTab.Screen
@@ -83,7 +83,7 @@ function GroceriesNavigator() {
           <GroceriesStack.Screen
               name="GroceriesScreen"
               component={GroceriesScreen}
-              options={{headerTitle: 'Groceries List'}}
+              options={{headerTitle: 'Current Inventory'}}
           />
       </GroceriesStack.Navigator>
   );
