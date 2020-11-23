@@ -9,6 +9,9 @@ import * as SQLite from 'expo-sqlite';
 const db = SQLite.openDatabase("db.db");
 
 //[["Eggs",2],["Muffins",4],["Chips",6]];
+
+// placeholder data. Need stuff from backend people if this is to actually work
+
 // name, upc, qty, notes, date
 var inventoryList = [["CHIPS AHOY! Original Chocolate Chip Cookies, Family Size, 18.2 Oz", '044000033385', 1, 'none', '2020-11-22 21:50:35'],
     ["Pepperidge Farm Goldfish Cheddar Crackers, 30 Oz. Carton", '014100096559', 1, 'none', '2020-11-22 22:50:35'],
@@ -80,7 +83,7 @@ export default function TabOneScreen() {
                 data={DATA}
                 initialNumToRender={4}
                 renderItem={({item}) => <StyledListItem name={item.title} qty={item.qty} id={item.id} upc={item.upc}
-                                                        date={item.date} notes={item.notes}/>}
+                                                        date={item.date} notes={item.notes} icon={'delete'}/>}
                 keyExtractor={item => item.id}
                 getItemCount={getItemCount}
                 getItem={getItem}
@@ -125,6 +128,5 @@ const styles = StyleSheet.create({
     },
     delete: {
         flex: 1,
-
     },
 });

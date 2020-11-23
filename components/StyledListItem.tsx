@@ -15,7 +15,7 @@ function set_state({state}: { state: boolean }) {
     Alert.alert('Test', 'state = empty');
 }
 
-export default function StyledListItem({name, qty, id, upc, notes, date}: { name: string, qty: string | number, id: string, upc: string | number, notes: string, date: string }) {
+export default function StyledListItem({name, qty, id, upc, notes, date, icon}: { name: string, qty: string | number, id: string, upc: string | number, notes: string, date: string, icon: string }) {
     if (empty) {
         return null;
     }
@@ -27,7 +27,7 @@ export default function StyledListItem({name, qty, id, upc, notes, date}: { name
             <View style={styles.container}>
                 <Text onPress={() => item_info({name, qty, id, upc, notes, date})} style={styles.name}>{name}</Text>
                 <Text style={styles.qty}>{qty}</Text>
-                <MaterialIcons name='delete' size={24} color='grey' style={styles.delete}
+                <MaterialIcons name={icon} size={24} color='grey' style={styles.delete}
                                onPress={() => set_state({state})}/>
             </View>
             <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>

@@ -56,7 +56,7 @@ function Items({done: doneHeading, onPressItem}) {
                     key={id}
                     onPress={() => onPressItem && onPressItem(id)}
                     style={{
-                        backgroundColor: done ? "#06905f6" : "#fff",
+                        backgroundColor: done ? "#06905f" : "#fff",
                         borderColor: "#000",
                         borderWidth: 1,
                         padding: 8
