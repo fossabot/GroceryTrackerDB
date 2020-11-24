@@ -72,11 +72,11 @@ You can build a standalone android `.apk` file by running this command
    ```
 
 ## Screen shots
-- Splash Screen
+#### Splash Screen
 
 ![splash](assets/images/splash.PNG)
 
-- In App
+#### In App
 
 ![empty scan page](docs/media/scan_empty.jpg)
 ![full_scan_page](docs/media/scan_populated.PNG)
@@ -86,5 +86,8 @@ You can build a standalone android `.apk` file by running this command
 ![shopping list](docs/media/shopping.PNG)
 ![settings](docs/media/settings.PNG)
 
-- Demo
+#### Demo 1
 ![demo](docs/media/demo.mp4)
+
+#### Demo 2
+![better demo](docs/media/better_demo.mp4)

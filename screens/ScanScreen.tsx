@@ -40,7 +40,7 @@ function addToInventory({name, qty, UPC, notes}: { name: string, qty: string, UP
     );
 }
 
-function removeFromInventory() {
+function removeFromInventory({name, qty, UPC, notes}: { name: string, qty: string, UPC: string, notes: string }) {
 
 }
 
@@ -65,6 +65,7 @@ export default class ScanScreen extends Component {
         addbgColor: '#0ed145',
         removebgColor: '#BEA6A1',
     };
+    // @ts-ignore
     private interval: NodeJS.Timeout;
 
     componentDidMount() {
@@ -115,6 +116,7 @@ export default class ScanScreen extends Component {
     }
 
     async onSubmit() {
+        // @ts-ignore
         this.state.UPC = await getData();
         await this.getAPIdata(this.state.UPC);
         if (this.state.qty === '') {

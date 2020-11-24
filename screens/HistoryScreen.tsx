@@ -62,6 +62,7 @@ export default function HistoryScreen() {
                 <Text style={styles.delete}>Action</Text>
             </View>
             <VirtualizedList
+                // @ts-ignore
                 data={DATA}
                 initialNumToRender={4}
                 renderItem={({item}) => <StyledListItem name={item.title} qty={item.qty} id={item.id} upc={item.upc}

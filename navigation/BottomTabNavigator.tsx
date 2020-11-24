@@ -9,6 +9,7 @@ import GroceriesScreen from '../screens/GroceriesScreen';
 import ScanScreen from '../screens/ScanScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import HistoryScreen from "../screens/HistoryScreen";
+// @ts-ignore
 import ShoppingScreen from "../screens/ShoppingScreen";
 import {
     BottomTabParamList,

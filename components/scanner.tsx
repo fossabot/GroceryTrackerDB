@@ -49,6 +49,7 @@ export default function Scanner() {
 
             }}>
             <BarCodeScanner
+                // @ts-ignore
                 onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                 style={StyleSheet.absoluteFillObject}
                 barCodeTypes={[BarCodeScanner.Constants.BarCodeType.ean13, BarCodeScanner.Constants.BarCodeType.ean8,
