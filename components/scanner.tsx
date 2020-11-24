@@ -9,6 +9,7 @@ const storeData = async (value: string) => {
         await AsyncStorage.setItem('@storage_Key', value)
     } catch (e) {
         // saving error
+        console.log('Upc storage error');
     }
 }
 
@@ -28,8 +29,9 @@ export default function Scanner() {
     // @ts-ignore
     const handleBarCodeScanned = ({type, data}) => {
         setScanned(true);
-        alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+        //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
         storeData(data);
+        //this.forceUpdate();
     };
 
     if (hasPermission === null) {

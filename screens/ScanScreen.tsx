@@ -13,10 +13,12 @@ const getData = async () => {
         const value = await AsyncStorage.getItem('@storage_Key')
         if (value !== null) {
             // value previously stored
+            // console.log("get!");
             return value;
         }
     } catch (e) {
         // error reading value
+        console.log('Upc read error');
     }
 }
 
@@ -54,9 +56,33 @@ export default class ScanScreen extends Component {
         addbgColor: '#0ed145',
         removebgColor: '#BEA6A1',
     };
+    private interval: NodeJS.Timeout;
+
+    componentDidMount() {
+        this.interval = setInterval(() => this.update(), 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    async update() {
+        this.state.UPC = await getData();
+        this.forceUpdate();
+        // console.log("update")
+    }
+
+    clearForm() {
+        this.state.name = '';
+        this.state.UPC = '';
+        this.state.qty = '';
+        this.state.notes = '';
+    }
 
     async onSubmit() {
         this.state.UPC = await getData();
+        this.forceUpdate();
+        console.log(this.state.UPC);
         const {mode, name, UPC, qty, notes} = this.state;
 
         if (name === '' || qty === '') {
@@ -67,9 +93,11 @@ export default class ScanScreen extends Component {
             Alert.alert('Removing', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes}`);
         } else {
             Alert.alert('Adding', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes} `);
-          addToInventory({name, qty, UPC, notes});
-      }
-  }
+            addToInventory({name, qty, UPC, notes});
+        }
+        await AsyncStorage.clear();
+        this.clearForm();
+    }
 
   onAddToggle() {
     this.state.mode = 'add';
