@@ -44,12 +44,21 @@ function removeFromInventory() {
 
 }
 
+function sleep(milliseconds: number) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+        currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+}
+
 export default class ScanScreen extends Component {
 
     state = {
         mode: 'add',
         name: '',
         UPC: '',
+        oldUPC: '',
         qty: '',
         notes: '',
         message: "",
@@ -67,21 +76,51 @@ export default class ScanScreen extends Component {
     }
 
     async update() {
+        // @ts-ignore
         this.state.UPC = await getData();
+        /*if (this.state.UPC != this.state.oldUPC) {
+            // @ts-ignore
+            this.state.name = await this.getAPIdata(this.state.UPC);
+            this.state.oldUPC = this.state.UPC;
+        }*/
         this.forceUpdate();
         // console.log("update")
+    }
+
+    async getAPIdata(UPC: string) {
+        const proxyurl = "https://cors-anywhere.herokuapp.com/"; // Use a proxy to avoid CORS error
+        const api_key = "pdd978huo2zcxnz2dp4tb4f9vjgl6d";
+        const url = "https://api.barcodelookup.com/v2/products?barcode=" + UPC + "&formatted=y&key=" + api_key;
+        console.log(url);
+        await fetch(url)
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data.products[0].product_name);
+                this.state.name = data.products[0].product_name;
+                this.forceUpdate();
+            })
+            .catch(err => {
+                throw err
+            });
+        //return product_data;
     }
 
     clearForm() {
         this.state.name = '';
         this.state.UPC = '';
-        this.state.qty = '';
+        // this.state.qty = '';
         this.state.notes = '';
+        this.forceUpdate();
     }
 
     async onSubmit() {
         this.state.UPC = await getData();
+        await this.getAPIdata(this.state.UPC);
+        if (this.state.qty === '') {
+            this.state.qty = '1';
+        }
         this.forceUpdate();
+        // sleep(2000);
         console.log(this.state.UPC);
         const {mode, name, UPC, qty, notes} = this.state;
 
