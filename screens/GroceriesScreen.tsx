@@ -34,7 +34,7 @@ const DATA = [];
 
 // @ts-ignore
 const getItem = (data, index) => {
-    console.log('log');
+    // console.log('log');
     return {
         id: Math.random().toString(12).substring(0),
         title: `${inventoryList[index][0]}`,

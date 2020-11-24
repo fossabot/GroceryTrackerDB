@@ -13,10 +13,12 @@ const getData = async () => {
         const value = await AsyncStorage.getItem('@storage_Key')
         if (value !== null) {
             // value previously stored
+            // console.log("get!");
             return value;
         }
     } catch (e) {
         // error reading value
+        console.log('Upc read error');
     }
 }
 
@@ -42,21 +44,85 @@ function removeFromInventory() {
 
 }
 
+function sleep(milliseconds: number) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+        currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+}
+
 export default class ScanScreen extends Component {
 
     state = {
         mode: 'add',
         name: '',
         UPC: '',
+        oldUPC: '',
         qty: '',
         notes: '',
         message: "",
         addbgColor: '#0ed145',
         removebgColor: '#BEA6A1',
     };
+    private interval: NodeJS.Timeout;
+
+    componentDidMount() {
+        this.interval = setInterval(() => this.update(), 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+
+    async update() {
+        // @ts-ignore
+        this.state.UPC = await getData();
+        /*
+        if (this.state.UPC != this.state.oldUPC && this.state.UPC != '') {
+            // @ts-ignore
+            this.state.name = await this.getAPIdata(this.state.UPC);
+            this.state.oldUPC = this.state.UPC;
+        }*/
+        this.forceUpdate();
+        // console.log("update")
+    }
+
+    async getAPIdata(UPC: string) {
+        const proxyurl = "https://cors-anywhere.herokuapp.com/"; // Use a proxy to avoid CORS error
+        const api_key = "pdd978huo2zcxnz2dp4tb4f9vjgl6d";
+        const url = "https://api.barcodelookup.com/v2/products?barcode=" + UPC + "&formatted=y&key=" + api_key;
+        console.log(url);
+        await fetch(url)
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data.products[0].product_name);
+                this.state.name = data.products[0].product_name;
+                this.forceUpdate();
+            })
+            .catch(err => {
+                throw err
+            });
+        //return product_data;
+    }
+
+    clearForm() {
+        this.state.name = '';
+        this.state.UPC = '';
+        // this.state.qty = '';
+        this.state.notes = '';
+        this.forceUpdate();
+    }
 
     async onSubmit() {
         this.state.UPC = await getData();
+        await this.getAPIdata(this.state.UPC);
+        if (this.state.qty === '') {
+            this.state.qty = '1';
+        }
+        this.forceUpdate();
+        // sleep(2000);
+        console.log(this.state.UPC);
         const {mode, name, UPC, qty, notes} = this.state;
 
         if (name === '' || qty === '') {
@@ -67,9 +133,11 @@ export default class ScanScreen extends Component {
             Alert.alert('Removing', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes}`);
         } else {
             Alert.alert('Adding', `name: ${name}\nUPC: ${UPC}\nQTY: ${qty}\nNotes: ${notes} `);
-          addToInventory({name, qty, UPC, notes});
-      }
-  }
+            addToInventory({name, qty, UPC, notes});
+        }
+        await AsyncStorage.clear();
+        this.clearForm();
+    }
 
   onAddToggle() {
     this.state.mode = 'add';
