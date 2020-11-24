@@ -78,7 +78,8 @@ export default class ScanScreen extends Component {
     async update() {
         // @ts-ignore
         this.state.UPC = await getData();
-        /*if (this.state.UPC != this.state.oldUPC) {
+        /*
+        if (this.state.UPC != this.state.oldUPC && this.state.UPC != '') {
             // @ts-ignore
             this.state.name = await this.getAPIdata(this.state.UPC);
             this.state.oldUPC = this.state.UPC;
