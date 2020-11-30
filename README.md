@@ -22,6 +22,12 @@ You can install this app using either npm or yarn as your package manager.
 * You'll need [npm](https://nodejs.org/en/) to get started with either method.
 * To run the app from source on your device, you'll need to install the [expo client app](https://expo.io/tools#client) on your device.
 
+##### If you encounter issues running expo:
+* Try clearing the cache:
+   ```bash
+   expo r -c
+   ```
+
 #### npm Method
 
 1. Install command line tools for expo
@@ -34,7 +40,12 @@ You can install this app using either npm or yarn as your package manager.
    ```bash
    npm install
    ```
-3. Run the app!
+3. Setup expo
+
+   ```bash
+   expo install
+   ```  
+4. Run the app!
 
    ```bash
    expo start
@@ -57,7 +68,12 @@ You can install this app using either npm or yarn as your package manager.
    ```bash
    yarn install
    ```
-4. Run the app!
+4. Setup expo
+
+   ```bash
+   expo install
+   ```  
+5. Run the app!
 
    ```bash
    expo start
