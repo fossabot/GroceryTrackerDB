@@ -1,9 +1,36 @@
 import * as React from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
-import {Divider,} from 'react-native-paper';
+import {Alert, ScrollView, StyleSheet, View} from 'react-native';
+import {Divider, Subheading} from 'react-native-paper';
 import SettingsItem from '../components/SettingsItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const storeData = async (value: string) => {
+  try {
+    await AsyncStorage.setItem('@barcode_Key', value)
+  } catch (e) {
+    // saving error
+    console.log('key storage storage error');
+  }
+}
+
+function handle_key_change() {
+  Alert.prompt(
+      'Enter API Key',
+      'Enter your API key for barcodelookup.com',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: password => storeData(password),
+        },
+      ],
+      'plain-text'
+  );
+}
 
 export default function SettingsScreen() {
 
@@ -11,6 +38,7 @@ export default function SettingsScreen() {
 
   let demo_mode = false;
 
+  // @ts-ignore
   return (
       <ScrollView
           style={styles.main_container}
@@ -26,6 +54,33 @@ export default function SettingsScreen() {
               );
             }}
         />
+        <Divider/>
+        <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingHorizontal: 16,
+              paddingVertical: 12,
+            }}
+        >
+          <Subheading onPress={() => handle_key_change()}>Change Barcode API Key</Subheading>
+        </View>
+        <Divider/>
+        <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingHorizontal: 16,
+              paddingVertical: 12,
+            }}
+        >
+          <Subheading onPress={() => {
+            storeData("pdd978huo2zcxnz2dp4tb4f9vjgl6d");
+            Alert.alert("Success", "Key Stored");
+          }}>Reset to default Barcode API Key</Subheading>
+        </View>
         <Divider/>
       </ScrollView>
 

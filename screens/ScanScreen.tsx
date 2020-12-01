@@ -90,7 +90,6 @@ export default class ScanScreen extends Component {
     }
 
     async getAPIdata(UPC: string) {
-        const proxyurl = "https://cors-anywhere.herokuapp.com/"; // Use a proxy to avoid CORS error
         const api_key = "pdd978huo2zcxnz2dp4tb4f9vjgl6d";
         const url = "https://api.barcodelookup.com/v2/products?barcode=" + UPC + "&formatted=y&key=" + api_key;
         console.log(url);
