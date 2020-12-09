@@ -116,8 +116,13 @@ export default class ScanScreen extends Component {
 
     async onSubmit() {
         // @ts-ignore
-        this.state.UPC = await getData();
-        await this.getAPIdata(this.state.UPC);
+        try {
+            this.state.UPC = await getData();
+            await this.getAPIdata(this.state.UPC);
+        } catch (err) {
+            Alert.alert("Error", 'Make sure you have something in all the required fields!');
+            return false;
+        }
         if (this.state.qty === '') {
             this.state.qty = '1';
         }

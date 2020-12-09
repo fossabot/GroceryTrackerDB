@@ -18,16 +18,15 @@ var inventoryList = [["CHIPS AHOY! Original Chocolate Chip Cookies, Family Size,
     ["Granny Smith Apples, Granny Smith", '888670019894', 7, 'none', '2020-11-22 22:50:35'],
     ["Old Bay Crab Cake Classic Mix", '696551678722', 54, 'none', '2020-11-22 22:50:35'],
     ["Old Bay Seasoning (7.5 Lbs.)", '818227628118', 12, 'none', '2020-11-22 22:50:35'],
-    ["Crab Meat", '858274001489', 89, 'none', '2020-11-22 22:50:35'],
     ["Rutter's Whole Milk, Half Gallon", '071156500676', 1, 'none', '2020-11-22 22:50:35'],
     ["Berger Cookies - Original 15oz pack (Set of 4) - Baltimore delicious, hand-dipped, chocolate fudge cookies. Original homemade recipe.", '052395923532', 1, 'none', '2020-11-22 22:50:35'],
     ["Yellow Cake Mix", '853243005055', 3, 'none', '2020-11-22 22:50:35'],
     ["Classic Chocolate Cake Mix", '099482468309', 2, 'none', '2020-11-22 22:50:35'],
     ["BANDAID Rolled Gauze Large 5 Each by BandAid", '381371161416', 7, 'none', '2020-11-22 22:50:35'],
-    ["Biore Charcoal, Deep Cleansing Pore Strips, 6 Nose Strips for Blackhead Removal on Oily Skin, with Instant Blackhead Removal and Pore Unclogging, Feat", '019100207431', 1, 'none', '2020-11-22 22:50:35'],
     ["Refurbished Apple iPhone 11 Pro Max 64GB - Space Gray Unlocked", '190199380554', 1, 'none', '2020-11-22 22:50:35'],
     ["Nabisco Honey Maid, Honey Graham Crackers, 14.4 oz612", '100012770981 ', 1, 'none', '2020-11-22 22:50:35'],
-    ["Ziploc Qt Ziploc Freezer Bag", '818210470908', 2, 'none', '2020-11-22 22:50:35']];
+    ["Ziploc Qt Ziploc Freezer Bag", '818210470908', 2, 'none', '2020-11-22 22:50:35'],
+    ["Biore Charcoal, Deep Cleansing Pore Strips, 6 Nose Strips for Blackhead Removal on Oily Skin, with Instant Blackhead Removal and Pore Unclogging, Feat", '019100207431', 2, 'none', '2020-11-22 22:50:35'],];
 
 // @ts-ignore
 const DATA = [];
