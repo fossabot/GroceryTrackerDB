@@ -91,6 +91,7 @@ You can build a standalone android `.apk` file by running this command
 #### Splash Screen
 
 ![splash](assets/images/splash.PNG)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FADMARIl%2FGroceryTrackerDB.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FADMARIl%2FGroceryTrackerDB?ref=badge_shield)
 
 #### In App
 
@@ -107,3 +108,7 @@ You can build a standalone android `.apk` file by running this command
 
 #### Demo 2
 ![better demo](docs/media/better_demo.mp4)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FADMARIl%2FGroceryTrackerDB.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FADMARIl%2FGroceryTrackerDB?ref=badge_large)
